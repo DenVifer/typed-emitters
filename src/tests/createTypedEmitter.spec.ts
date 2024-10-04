@@ -1,30 +1,30 @@
 import {
-    createSingleEventEmitter,
-    SingleEventEmitter,
-} from "../lib/createSingleEventEmitter";
+    createTypedEmitter,
+    TypedEventEmitter,
+} from "../lib/createTypedEmitter";
 
-describe(createSingleEventEmitter.name, () => {
-    let emitter: SingleEventEmitter<[string, number]>;
+describe(createTypedEmitter.name, () => {
+    let emitter: TypedEventEmitter<[string, number]>;
 
     beforeEach(() => {
-        emitter = createSingleEventEmitter();
+        emitter = createTypedEmitter();
     });
 
-    test("hasListeners returns false if there are no listeners", () => {
-        expect(emitter.hasListeners()).toBeFalsy();
+    test("checkForListeners returns false if there are no listeners", () => {
+        expect(emitter.checkForListeners()).toBeFalsy();
     });
 
-    test("hasListeners returns true after adding a listener", () => {
+    test("checkForListeners returns true after adding a listener", () => {
         emitter.addListener(jest.fn());
-        expect(emitter.hasListeners()).toBeTruthy();
+        expect(emitter.checkForListeners()).toBeTruthy();
     });
 
-    test("hasListeners returns false after removing a listener", () => {
+    test("checkForListeners returns false after removing a listener", () => {
         const listener = jest.fn();
         emitter.addListener(listener);
         emitter.removeListener(listener);
 
-        expect(emitter.hasListeners()).toBeFalsy();
+        expect(emitter.checkForListeners()).toBeFalsy();
     });
 
     test("calls a listener with right args", () => {
@@ -41,16 +41,16 @@ describe(createSingleEventEmitter.name, () => {
         const listener = jest.fn();
 
         emitter.source.addListener(listener);
-        expect(emitter.hasListeners()).toBeTruthy();
+        expect(emitter.checkForListeners()).toBeTruthy();
 
         emitter.source.removeListener(listener);
-        expect(emitter.hasListeners()).toBeFalsy();
+        expect(emitter.checkForListeners()).toBeFalsy();
     });
 
     test("removes all listeners", () => {
         emitter.addListener(jest.fn());
         emitter.removeAllListeners();
-        expect(emitter.hasListeners()).toBeFalsy();
+        expect(emitter.checkForListeners()).toBeFalsy();
     });
 
     test("doesn't add duplicated listeners", () => {

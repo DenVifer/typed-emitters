@@ -4,7 +4,7 @@ type Listeners<ArgsByEventName extends Record<string | number, unknown[]>> = {
     >;
 };
 
-export const createMultiEventEmitter = <
+export const createTypedMultiEmitter = <
     ArgsByEventName extends Record<string | number, unknown[]>
 >() => {
     let listeners = {} as Listeners<ArgsByEventName>;
@@ -31,7 +31,7 @@ export const createMultiEventEmitter = <
         };
     };
 
-    const hasListeners = <EventName extends keyof ArgsByEventName>(
+    const checkForListeners = <EventName extends keyof ArgsByEventName>(
         eventName?: EventName
     ) => {
         if (eventName !== undefined) {
@@ -67,7 +67,7 @@ export const createMultiEventEmitter = <
     return {
         addListener,
         removeListener,
-        hasListeners,
+        checkForListeners,
         emit,
         removeAllListeners,
         get source() {
@@ -79,10 +79,10 @@ export const createMultiEventEmitter = <
     };
 };
 
-export type MultiEventEmitter<
+export type TypedMultiEventEmitter<
     ArgsByEventName extends Record<string | number, Array<unknown>>
-> = ReturnType<typeof createMultiEventEmitter<ArgsByEventName>>;
+> = ReturnType<typeof createTypedMultiEmitter<ArgsByEventName>>;
 
-export type MultiEventSource<
+export type TypedMultiEventSource<
     ArgsByEventName extends Record<string | number, Array<unknown>>
-> = ReturnType<typeof createMultiEventEmitter<ArgsByEventName>>["source"];
+> = ReturnType<typeof createTypedMultiEmitter<ArgsByEventName>>["source"];

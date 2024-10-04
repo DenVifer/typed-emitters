@@ -1,11 +1,8 @@
-export { createSingleEventEmitter } from "./createSingleEventEmitter";
-export { createMultiEventEmitter } from "./createMultiEventEmitter";
+export { createTypedEmitter } from "./createTypedEmitter";
+export { createTypedMultiEmitter } from "./createTypedMultiEmitter";
 
+export type { TypedEventEmitter, TypedEventSource } from "./createTypedEmitter";
 export type {
-    SingleEventEmitter,
-    SingleEventSource,
-} from "./createSingleEventEmitter";
-export type {
-    MultiEventEmitter,
-    MultiEventSource,
-} from "./createMultiEventEmitter";
+    TypedMultiEventEmitter,
+    TypedMultiEventSource,
+} from "./createTypedMultiEmitter";

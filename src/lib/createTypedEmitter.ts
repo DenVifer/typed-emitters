@@ -1,4 +1,4 @@
-export const createSingleEventEmitter = <Args extends unknown[] = []>() => {
+export const createTypedEmitter = <Args extends unknown[] = []>() => {
     const listeners = new Set<(...args: Args) => void>();
 
     const removeListener = (listener: (...args: Args) => void): void => {
@@ -12,7 +12,7 @@ export const createSingleEventEmitter = <Args extends unknown[] = []>() => {
         };
     };
 
-    const hasListeners = () => !!listeners.size;
+    const checkForListeners = () => !!listeners.size;
 
     const emit = (...args: Args) => {
         listeners.forEach((listener) => {
@@ -27,7 +27,7 @@ export const createSingleEventEmitter = <Args extends unknown[] = []>() => {
     return {
         addListener,
         removeListener,
-        hasListeners,
+        checkForListeners,
         emit,
         removeAllListeners,
         get source() {
@@ -39,10 +39,10 @@ export const createSingleEventEmitter = <Args extends unknown[] = []>() => {
     };
 };
 
-export type SingleEventEmitter<Args extends Array<unknown>> = ReturnType<
-    typeof createSingleEventEmitter<Args>
+export type TypedEventEmitter<Args extends Array<unknown>> = ReturnType<
+    typeof createTypedEmitter<Args>
 >;
 
-export type SingleEventSource<Args extends Array<unknown>> = ReturnType<
-    typeof createSingleEventEmitter<Args>
+export type TypedEventSource<Args extends Array<unknown>> = ReturnType<
+    typeof createTypedEmitter<Args>
 >["source"];

@@ -1,4 +1,4 @@
-![typed-emitters | Simple and convenient event emitters with separate interfaces for consumers.](https://raw.githubusercontent.com/denvifer/typed-emitters/master/docs/image.png)
+![typed-emitters | Simple, Typed, Universal, Lightweight, Dependency-free event emitters](https://raw.githubusercontent.com/denvifer/typed-emitters/master/docs/image.png)
 
 <div align="center">
   <a href="https://bundlephobia.com/package/typed-emitters" alt=“bundlephobia min”>
@@ -15,8 +15,6 @@
   </a>
 </div>
 
-100% TypeScript, no deps.
-
 ## Install
 
 ```bash
@@ -28,17 +26,17 @@ npm install typed-emitters
 ### Provider
 
 ```typescript
-import { createSingleEventEmitter } from "typed-emitters";
+import { createTypedEmitter } from "typed-emitters";
 ```
 
 ```typescript
-const emitter = // Or private class field
-    createSingleEventEmitter<
+const emitter =
+    createTypedEmitter<
         [string, number] // Multiple args are supported
     >();
 
 // Share the public interface
-export const event = this.emitter.source; // Or public class field
+export const event = this.emitter.source;
 ```
 
 ```typescript
@@ -48,7 +46,7 @@ emitter.emit("Test string", 1); // Type checking
 ### Consumer
 
 ```typescript
-// Consumer has access only to the public interface (can listen but not emit)
+// The source object allows listening to events but not emitting them
 
 // The type of args is [string, number]
 event.addListener((...args) => {
@@ -61,18 +59,18 @@ event.addListener((...args) => {
 ### Provider
 
 ```typescript
-import { createMultiEventEmitter } from "typed-emitters";
+import { createTypedMultiEmitter } from "typed-emitters";
 ```
 
 ```typescript
-const emitter = // Or private class field
-    createMultiEventEmitter<{
+const emitter =
+    createTypedMultiEmitter<{
         'type1': [number],
         'type2' [string, number]
     }>();
 
 // Share the public interface
-export const events = this.emitter.source; // Or public class field
+export const events = this.emitter.source;
 ```
 
 ```typescript
@@ -83,7 +81,7 @@ emitter.emit("type2", "Test string", 1); // Type checking
 ### Consumer
 
 ```typescript
-// Consumer has access only to the public interface (can listen but not emit)
+// The source object allows listening to events but not emitting them
 
 // The type of value is number
 events.addListener("type1", (value) => {
@@ -111,14 +109,14 @@ dispose();
 
 ## Other
 
-### Check if an emitter has listeners
+### Check if an emitter has any listeners
 
 ```typescript
-emitter.hasListeners();
+emitter.checkForListeners();
 ```
 
 ```typescript
-emitter.hasListeners("type1");
+emitter.checkForListeners("type1");
 ```
 
 ### Removing all listeners
@@ -133,7 +131,7 @@ emitter.removeAllListeners("type1");
 
 ### Exported types
 
--   `SingleEventEmitter<Args>`
--   `SingleEventSource<Args>`
--   `MultiEventEmitter<ArgsByEventName>`
--   `MultiEventSource<ArgsByEventName>`
+-   `TypedEventEmitter<Args>`
+-   `TypedEventSource<Args>`
+-   `TypedMultiEventEmitter<ArgsByEventName>`
+-   `TypedMultiEventSource<ArgsByEventName>`

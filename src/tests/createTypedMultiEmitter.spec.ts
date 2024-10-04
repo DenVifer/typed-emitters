@@ -1,44 +1,44 @@
 import {
-    createMultiEventEmitter,
-    MultiEventEmitter,
-} from "../lib/createMultiEventEmitter";
+    createTypedMultiEmitter,
+    TypedMultiEventEmitter,
+} from "../lib/createTypedMultiEmitter";
 
-describe(createMultiEventEmitter.name, () => {
-    let emitter: MultiEventEmitter<{
+describe(createTypedMultiEmitter.name, () => {
+    let emitter: TypedMultiEventEmitter<{
         event1: [string, number];
         event2: [number, string];
     }>;
 
     beforeEach(() => {
-        emitter = createMultiEventEmitter();
+        emitter = createTypedMultiEmitter();
     });
 
-    test("hasListeners returns false if there are no listeners", () => {
-        expect(emitter.hasListeners("event1")).toBeFalsy();
-        expect(emitter.hasListeners("event2")).toBeFalsy();
+    test("checkForListeners returns false if there are no listeners", () => {
+        expect(emitter.checkForListeners("event1")).toBeFalsy();
+        expect(emitter.checkForListeners("event2")).toBeFalsy();
     });
 
-    test("hasListeners returns true for the right eventName after adding a listener", () => {
+    test("checkForListeners returns true for the right eventName after adding a listener", () => {
         emitter.addListener("event1", jest.fn());
-        expect(emitter.hasListeners("event1")).toBeTruthy();
-        expect(emitter.hasListeners("event2")).toBeFalsy();
+        expect(emitter.checkForListeners("event1")).toBeTruthy();
+        expect(emitter.checkForListeners("event2")).toBeFalsy();
     });
 
-    test("hasListeners returns false after removing a listener", () => {
+    test("checkForListeners returns false after removing a listener", () => {
         const listener = jest.fn();
         emitter.addListener("event1", listener);
         emitter.removeListener("event1", listener);
 
-        expect(emitter.hasListeners("event1")).toBeFalsy();
-        expect(emitter.hasListeners("event2")).toBeFalsy();
+        expect(emitter.checkForListeners("event1")).toBeFalsy();
+        expect(emitter.checkForListeners("event2")).toBeFalsy();
     });
 
-    test("hasListeners method works correctly when eventName is not specified", () => {
+    test("checkForListeners method works correctly when eventName is not specified", () => {
         const listener = jest.fn();
         emitter.addListener("event1", listener);
-        expect(emitter.hasListeners()).toBeTruthy();
+        expect(emitter.checkForListeners()).toBeTruthy();
         emitter.removeAllListeners();
-        expect(emitter.hasListeners()).toBeFalsy();
+        expect(emitter.checkForListeners()).toBeFalsy();
     });
 
     test("calls the right listener with right args", () => {
@@ -59,26 +59,26 @@ describe(createMultiEventEmitter.name, () => {
         const listener = jest.fn();
 
         emitter.source.addListener("event1", listener);
-        expect(emitter.hasListeners("event1")).toBeTruthy();
+        expect(emitter.checkForListeners("event1")).toBeTruthy();
 
         emitter.source.removeListener("event1", listener);
-        expect(emitter.hasListeners("event1")).toBeFalsy();
+        expect(emitter.checkForListeners("event1")).toBeFalsy();
     });
 
     test("removes all listeners", () => {
         emitter.addListener("event1", jest.fn());
         emitter.addListener("event2", jest.fn());
         emitter.removeAllListeners();
-        expect(emitter.hasListeners("event1")).toBeFalsy();
-        expect(emitter.hasListeners("event2")).toBeFalsy();
+        expect(emitter.checkForListeners("event1")).toBeFalsy();
+        expect(emitter.checkForListeners("event2")).toBeFalsy();
     });
 
     test("removes all listeners for a specific eventName", () => {
         emitter.addListener("event1", jest.fn());
         emitter.addListener("event2", jest.fn());
         emitter.removeAllListeners("event1");
-        expect(emitter.hasListeners("event1")).toBeFalsy();
-        expect(emitter.hasListeners("event2")).toBeTruthy();
+        expect(emitter.checkForListeners("event1")).toBeFalsy();
+        expect(emitter.checkForListeners("event2")).toBeTruthy();
     });
 
     test("doesn't add duplicated listeners", () => {
