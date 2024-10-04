@@ -41,7 +41,7 @@
   },
   "author": "<d.vifer@gmail.com>",
   "license": "MIT",
-  "description": "Simple and convenient event emitters with separate interfaces for consumers.",
+  "description": "Simple / Typed / Universal / Lightweight / Dependency-free event emitters",
   "keywords": [
     "event-emitter",
     "events",
