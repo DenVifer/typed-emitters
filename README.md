@@ -15,6 +15,10 @@
   </a>
 </div>
 
+<br />
+
+<div align="center">Simple / Typed / Universal / Lightweight / Dependency-free event emitters</div>
+
 ## Install
 
 ```bash
