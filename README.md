@@ -27,7 +27,7 @@ npm install typed-emitters
 
 ## Single-event emitter
 
-### Provider
+### Create emitter
 
 ```typescript
 import { createTypedEmitter } from "typed-emitters";
@@ -47,7 +47,7 @@ export const event = this.emitter.source;
 emitter.emit("Test string", 1); // Type checking
 ```
 
-### Consumer
+### Listen to events
 
 ```typescript
 // The source object allows listening to events but not emitting them
@@ -60,7 +60,7 @@ event.addListener((...args) => {
 
 ## Multi-event emitter
 
-### Provider
+### Create emitter
 
 ```typescript
 import { createTypedMultiEmitter } from "typed-emitters";
@@ -82,7 +82,7 @@ emitter.emit("type1", 1); // Type checking
 emitter.emit("type2", "Test string", 1); // Type checking
 ```
 
-### Consumer
+### Listen to events
 
 ```typescript
 // The source object allows listening to events but not emitting them
